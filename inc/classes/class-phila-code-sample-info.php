@@ -1,7 +1,7 @@
 <?php
 
-new WPE_Code_Sample_Info();
-class WPE_Code_Sample_Info {
+new Phila_Code_Sample_Info();
+class Phila_Code_Sample_Info {
 	public function __construct() {
 		add_action( 'admin_enqueue_scripts', array( $this, 'initialize_template_request_scripts' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'initialize_template_request_scripts' ) );
@@ -9,14 +9,14 @@ class WPE_Code_Sample_Info {
 		add_action( 'wp_ajax_nopriv_hide_arrow_request', array( $this, 'run_template_request_function' ) );
 		add_action( 'wp_ajax_hide_arrow_request', array( $this, 'run_hide_arrow_function' ) );
 		add_action( 'wp_ajax_nopriv_page_hide_arrow', array( $this, 'run_hide_arrow_function' ) );
-		add_action( 'init', array( $this, 'wpe_admin_init' ) );
+		add_action( 'init', array( $this, 'phila_admin_init' ) );
 	}
 	/**
-	 * [wpe_code_sample_footer]
+	 * [phila_code_sample_footer]
 	 *
 	 * @return [type] [description]
 	 */
-	public function wpe_code_sample_footer() {
+	public function phila_code_sample_footer() {
 		echo '<div id="' . preg_replace( '/_+/', '-', __FUNCTION__ ) . '">';
 		echo '<h3>' . __FILE__ . __LINE__ . '</h3>';
 		echo '</div>';
@@ -49,8 +49,8 @@ class WPE_Code_Sample_Info {
 			)
 		);
 		wp_enqueue_script( 'hide-indexing-arrow' );
-		wp_register_style( 'wpe-code-sample', plugins_url( 'css/wpe-code-sample.css', __DIR__ ), time() );
-		wp_enqueue_style( 'wpe-code-sample' );
+		wp_register_style( 'phila-code-sample', plugins_url( 'css/phila-code-sample.css', __DIR__ ), time() );
+		wp_enqueue_style( 'phila-code-sample' );
 	}
 
 	public function run_template_request_function() {
@@ -74,19 +74,19 @@ class WPE_Code_Sample_Info {
 		exit();
 	}
 
-	public function wpe_admin_init() {
-		$settings = get_option( 'wpe_tabbed_settings' );
+	public function phila_admin_init() {
+		$settings = get_option( 'phila_tabbed_settings' );
 		if ( empty( $settings ) ) {
 			$settings = array(
-				'wpe_intro'     => 'Some intro text for the home page',
-				'wpe_tag_class' => false,
-				'wpe_ga'        => false,
+				'phila_intro'     => 'Some intro text for the home page',
+				'phila_tag_class' => false,
+				'phila_ga'        => false,
 			);
-			add_option( 'wpe_tabbed_settings', $settings, '', 'yes' );
+			add_option( 'phila_tabbed_settings', $settings, '', 'yes' );
 		}
 	}
 
-	public function wpe_admin_tabs( $current = 'overview' ) {
+	public function phila_admin_tabs( $current = 'overview' ) {
 		$tabs  = array(
 			'overview'   => 'Overview',
 			'background' => 'Background',
@@ -99,34 +99,34 @@ class WPE_Code_Sample_Info {
 		echo '<h2 class="nav-tab-wrapper">';
 		foreach ( $tabs as $tab => $name ) {
 			$class = ( $tab == $current ) ? ' nav-tab-active' : '';
-			echo "<a class='nav-tab$class' href='?page=wpe-code-sample-dashboard.php&tab=$tab'>$name</a>";
+			echo "<a class='nav-tab$class' href='?page=phila-code-sample-dashboard.php&tab=$tab'>$name</a>";
 
 		}
 		echo '</h2>';
 	}
 
-	public function get_wpe_setup_data() {
-		$plugin_data['Name'] = 'WPE Code Sample';
+	public function get_phila_setup_data() {
+		$plugin_data['Name'] = 'Phila Code Sample';
 		return $plugin_data;
 	}
 
-	public function wpe_settings_page() {
+	public function phila_settings_page() {
 		global $pagenow, $template;
-		// $settings = get_option( 'wpe_tabbed_settings' );
+		// $settings = get_option( 'phila_tabbed_settings' );
 		?>
 	
 	<div class="tabs-wrap">	
 		<?php
 		if ( isset( $_GET['tab'] ) ) {
-			$this->wpe_admin_tabs( $_GET['tab'] );
+			$this->phila_admin_tabs( $_GET['tab'] );
 		} else {
-			$this->wpe_admin_tabs( 'overview' );
+			$this->phila_admin_tabs( 'overview' );
 		}
 		?>
 
 	<div id="poststuff">
 			<?php
-			if ( $pagenow == 'index.php' && $_GET['page'] == 'wpe-code-sample-dashboard.php' ) {
+			if ( $pagenow == 'index.php' && $_GET['page'] == 'phila-code-sample-dashboard.php' ) {
 
 				if ( isset( $_GET['tab'] ) ) {
 					$tab = $_GET['tab'];
@@ -138,7 +138,7 @@ class WPE_Code_Sample_Info {
 					case 'background':
 						?>
 							<grid-cell class="grid-head-label">
-								<h2 class="description">WPE Code Challenge</h2>
+								<h2 class="description">Phila Code Challenge</h2>
 							</grid-cell>						
 							<grid-cell class="content">
 								<p class="description">Thought process behind the code rendering these screens:</p>
@@ -250,7 +250,7 @@ Your setup will render differently based on the values of your post meta. The fo
 					case 'scenario2':
 						?>
 							<grid-cell class="grid-head-label">
-								<h2 class="description">WPE Code Challenge</h2>
+								<h2 class="description">Phila Code Challenge</h2>
 							</grid-cell>						
 							<grid-cell class="content">
 								<h3>Scenario two</h3>
@@ -275,7 +275,7 @@ Your setup will render differently based on the values of your post meta. The fo
 					case 'overview':
 						?>
 							<grid-cell class="grid-head-label">
-								<h2 class="description">WPE Code Challenge</h2>
+								<h2 class="description">Phila Code Challenge</h2>
 							</grid-cell>					
 							<grid-cell class="content">
 								<p>
@@ -283,7 +283,7 @@ Your setup will render differently based on the values of your post meta. The fo
 								<ol>
 									<li>Marketing team members are having a hard time figuring out what page templates are being used on what pages. Write a plugin that lets authors easily see which template a page is using and also see only pages using a particular template.</li>
 
-									<li>The stakeholders want to be able to get featured posts out of many of our blogs and online magazines so they can put the posts into a widget on the wpengine.com blog. Write a plugin for those WordPress sites that gives the post author a way to mark a post as "Featured on WP Engine's blog" and a way to get the 5 most recent featured posts out of the REST API.</li>
+									<li>The stakeholders want to be able to get featured posts out of many of our blogs and online magazines so they can put the posts into a widget on the philangine.com blog. Write a plugin for those WordPress sites that gives the post author a way to mark a post as "Featured on WP Engine's blog" and a way to get the 5 most recent featured posts out of the REST API.</li>
 								</ol>
 							</grid-cell>
 						<?php
@@ -300,7 +300,7 @@ Your setup will render differently based on the values of your post meta. The fo
 	/**
 	 * Display the plugin code_sample bouncing arrow
 	 */
-	public function wpe_code_sample_arrow() {
+	public function phila_code_sample_arrow() {
 		global $code_sample_help_page;
 		?>
 	<div id="bouncing-arrow">

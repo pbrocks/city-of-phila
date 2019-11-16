@@ -6,20 +6,20 @@
  */
 
 
-add_action( 'admin_enqueue_scripts', 'enqueue_dashboard_scripts_styles' );
-function enqueue_dashboard_scripts_styles() {
+add_action( 'admin_enqueue_scripts', 'phila_enqueue_dashboard_scripts_styles' );
+function phila_enqueue_dashboard_scripts_styles() {
 	wp_register_style( 'plugin-dash', plugins_url( 'css/dashboard-customization.css', __FILE__ ) );
 	wp_enqueue_style( 'plugin-dash' );
 }
 
-add_action( 'login_enqueue_scripts', 'enqueue_login_scripts_styles' );
-function enqueue_login_scripts_styles() {
+add_action( 'login_enqueue_scripts', 'phila_enqueue_login_scripts_styles' );
+function phila_enqueue_login_scripts_styles() {
 	wp_register_style( 'login-page', plugins_url( 'css/login-customizations.css', __FILE__ ) );
 	wp_enqueue_style( 'login-page' );
 }
 
-add_action( 'wp_enqueue_scripts', 'enqueue_frontend_scripts_styles' );
-function enqueue_frontend_scripts_styles() {
+add_action( 'wp_enqueue_scripts', 'phila_enqueue_frontend_scripts_styles' );
+function phila_enqueue_frontend_scripts_styles() {
 	wp_register_style( 'plugin-frontend', plugins_url( 'css/frontend-customization.css', __FILE__ ) );
 	wp_enqueue_style( 'plugin-frontend' );
 }

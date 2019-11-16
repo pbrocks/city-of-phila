@@ -10,7 +10,7 @@ class Featured_Posts_via_API extends WP_Widget {
 	public function __construct() {
 		$widget_ops = array(
 			'classname'                   => 'widget_featured_entries',
-			'description'                 => __( 'WP Engine&#8217;s  Featured Posts.', 'wpe-code-sample' ),
+			'description'                 => __( 'WP Engine&#8217;s  Featured Posts.', 'phila-code-sample' ),
 			'customize_selective_refresh' => true,
 		);
 		parent::__construct( 'featured-posts', __( 'Featured on WP Engine&#8217;s Blog' ), $widget_ops );
@@ -31,7 +31,7 @@ class Featured_Posts_via_API extends WP_Widget {
 			$args['widget_id'] = $this->id;
 		}
 
-		$title = ( ! empty( $instance['title'] ) ) ? $instance['title'] : __( 'Featured on WP Engine&#8217;s Blog', 'wpe-code-sample' );
+		$title = ( ! empty( $instance['title'] ) ) ? $instance['title'] : __( 'Featured on WP Engine&#8217;s Blog', 'phila-code-sample' );
 
 		$title = apply_filters( 'widget_title', $title, $instance, $this->id_base );
 
@@ -117,16 +117,16 @@ class Featured_Posts_via_API extends WP_Widget {
 		$show_date    = isset( $instance['show_date'] ) ? (bool) $instance['show_date'] : false;
 		$show_excerpt = isset( $instance['show_excerpt'] ) ? (bool) $instance['show_excerpt'] : false;
 		?>
-		<p><label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'wpe-code-sample' ); ?></label>
+		<p><label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'phila-code-sample' ); ?></label>
 		<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo $title; ?>" /></p>
 
-		<p><label for="<?php echo $this->get_field_id( 'number' ); ?>"><?php _e( 'Number of posts to show:', 'wpe-code-sample' ); ?></label>
+		<p><label for="<?php echo $this->get_field_id( 'number' ); ?>"><?php _e( 'Number of posts to show:', 'phila-code-sample' ); ?></label>
 		<input class="tiny-text" id="<?php echo $this->get_field_id( 'number' ); ?>" name="<?php echo $this->get_field_name( 'number' ); ?>" type="number" step="1" min="1" value="<?php echo $number; ?>" size="3" /></p>
 
 		<p><input class="checkbox" type="checkbox"<?php checked( $show_date ); ?> id="<?php echo $this->get_field_id( 'show_date' ); ?>" name="<?php echo $this->get_field_name( 'show_date' ); ?>" />
-		<label for="<?php echo $this->get_field_id( 'show_date' ); ?>"><?php _e( 'Display post date?', 'wpe-code-sample' ); ?></label></p>
+		<label for="<?php echo $this->get_field_id( 'show_date' ); ?>"><?php _e( 'Display post date?', 'phila-code-sample' ); ?></label></p>
 		<p><input class="checkbox" type="checkbox"<?php checked( $show_excerpt ); ?> id="<?php echo $this->get_field_id( 'show_excerpt' ); ?>" name="<?php echo $this->get_field_name( 'show_excerpt' ); ?>" />
-		<label for="<?php echo $this->get_field_id( 'show_excerpt' ); ?>"><?php _e( 'Display excerpt?', 'wpe-code-sample' ); ?></label></p>
+		<label for="<?php echo $this->get_field_id( 'show_excerpt' ); ?>"><?php _e( 'Display excerpt?', 'phila-code-sample' ); ?></label></p>
 		<?php
 	}
 }
