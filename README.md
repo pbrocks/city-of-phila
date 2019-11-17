@@ -14,7 +14,7 @@ Your task is to create a set of fields in the WordPress admin that allows a user
 
 These fields should be rendered on the front-end under the post title (see the highlighted area of the next slide for an example). You can modify the WordPress default Twenty Nineteen (or Twenty Twenty) theme. 
 
-![https://github.com/pbrocks/city-of-phila/blob/authors/images/frontend-render.png?raw=true](Frontend-Render)
+![Frontend-Render](https://github.com/pbrocks/city-of-phila/blob/authors/images/frontend-render.png?raw=true)
 
 ### Requirements
 
