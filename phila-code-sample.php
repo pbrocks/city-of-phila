@@ -21,10 +21,6 @@ function phila_code_sample_install() {
 
 add_action( 'plugins_loaded', 'phila_code_sample_initialize_php' );
 function phila_code_sample_initialize_php() {
-	foreach ( glob( __DIR__ . '/inc/*.php' ) as $filename ) {
-		require $filename;
-	}
-
 	foreach ( glob( __DIR__ . '/inc/classes/*.php' ) as $filename ) {
 		require $filename;
 	}
@@ -39,16 +35,3 @@ function phila_code_sample_load_textdomain() {
 	load_plugin_textdomain( 'phila-code-sample', false, basename( dirname( __FILE__ ) ) . '/languages' );
 }
 add_action( 'plugins_loaded', 'phila_code_sample_load_textdomain' );
-
-/**
- * [phila_code_sample_plugin_action_links description]
- *
- * @param  [type] $links [description]
- * @return [type]        [description]
- */
-function phila_code_sample_plugin_action_links( $links ) {
-	$action_links[] =
-	'<a href="' . admin_url( 'customize.php?autofocus[panel]=sidetrack_login_panel' ) . '">' . __( 'Settings', 'phila-code-sample' ) . '</a>';
-	return array_merge( $links, $action_links );
-}
-add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'phila_code_sample_plugin_action_links' );
