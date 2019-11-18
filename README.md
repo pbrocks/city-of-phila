@@ -24,4 +24,3 @@ Use the Meta Box plugin to make the fields in the admin. You can use fieldset te
   - The contact name should be a link to a website.
   - The release date should be formatted like the following: June 29, 2019
   - If the release date or a piece of content isn’t entered, the field should not appear on the front-end.
->>>>>>> added-content
