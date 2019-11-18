@@ -3,23 +3,34 @@
 new Phila_Code_Sample_Info();
 class Phila_Code_Sample_Info {
 	public function __construct() {
+		add_action( 'admin_menu', array( $this, 'phila_code_sample_dashboard' ) );
+		add_action( 'admin_init', array( $this, 'code_sample_welcome' ), 11 );
 		add_action( 'admin_enqueue_scripts', array( $this, 'initialize_cphila_admin_styles' ) );
-		add_action( 'wp_enqueue_scripts', array( $this, 'initialize_cphila_frontend_styles' ) );
-		add_action( 'init', array( $this, 'phila_admin_init' ) );
+	}
+	/**
+	 * Add a page to the dashboard menu.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return array
+	 */
+	public function phila_code_sample_dashboard() {
+		global $code_sample_page;
+		$slug             = preg_replace( '/_+/', '-', __FUNCTION__ );
+		$label            = ucwords( preg_replace( '/_+/', ' ', __FUNCTION__ ) );
+		$code_sample_page = add_dashboard_page( __( $label, 'phila-code-sample' ), __( $label, 'phila-code-sample' ), 'manage_options', $slug . '.php', array( $this, 'phila_code_sample_response' ) );
 	}
 
 	/**
-	 * [initialize_cphila_frontend_styles]
-	 *
-	 * @return [type] [description]
+	 * Display the plugin code_sample message
 	 */
-	public function initialize_cphila_frontend_styles() {
-		wp_register_style( 'phila-code-2019', plugins_url( 'css/phila-code-2019.css', __DIR__ ), [ 'twentynineteen' ], time() );
+	public function phila_code_sample_response() {
+		global $code_sample_page;
+		echo '<div class="wrap">';
+		echo '<h2>' . ucwords( preg_replace( '/_+/', ' ', __FUNCTION__ ) ) . '</h2>';
 
-		$current_theme = wp_get_theme();
-		if ( 'Twenty Nineteen' === $current_theme->get( 'Name' ) ) {
-			wp_enqueue_style( 'phila-code-2019' );
-		}
+		$this->phila_settings_page();
+		echo '</div>';
 	}
 
 	/**
@@ -31,18 +42,6 @@ class Phila_Code_Sample_Info {
 		wp_register_style( 'phila-code-sample', plugins_url( 'css/phila-code-sample.css', __DIR__ ), [], time() );
 		wp_enqueue_style( 'phila-code-sample' );
 
-	}
-
-	public function phila_admin_init() {
-		$settings = get_option( 'phila_tabbed_settings' );
-		if ( empty( $settings ) ) {
-			$settings = array(
-				'phila_intro'     => 'Some intro text for the home page',
-				'phila_tag_class' => false,
-				'phila_ga'        => false,
-			);
-			add_option( 'phila_tabbed_settings', $settings, '', 'yes' );
-		}
 	}
 
 	public function phila_admin_tabs( $current = 'overview' ) {
@@ -251,6 +250,39 @@ Your setup will render differently based on the values of your post meta. The fo
 		</div>
 	</div>
 		<?php
+	}
+
+	/**
+	 * Add a page to the dashboard menu.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return array
+	 */
+	public function add_to_code_sample_dashboard() {
+		echo '<h2>' . basename( __FILE__ ) . __LINE__ . '</h2>';
+	}
+
+	/**
+	 * Check the plugin activated transient exists if does then redirect
+	 */
+	public function code_sample_welcome() {
+		if ( ! get_transient( 'code_sample_activated' ) ) {
+			return;
+		}
+
+		// Delete the plugin activated transient
+		delete_transient( 'code_sample_activated' );
+
+		wp_safe_redirect(
+			add_query_arg(
+				array(
+					'page' => 'phila-code-sample-dashboard.php',
+				),
+				admin_url( 'index.php' )
+			)
+		);
+		exit;
 	}
 
 }
