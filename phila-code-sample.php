@@ -41,7 +41,7 @@ add_action( 'plugins_loaded', 'phila_code_sample_load_textdomain' );
 
 function missing_plugin_notice__error() {
 	$class = 'notice notice-error';
-	$message = __( 'For this plugin to work, you will need to install the MetaBoxes plugin as well.', 'phila-code-sample' );
+	$message = __( 'For City of Phila Code Sample plugin to work, you will need to install and activate the MetaBoxes plugin as well.', 'phila-code-sample' );
 
 	printf( '<div class="%1$s"><p>%2$s</p></div>', esc_attr( $class ), esc_html( $message ) );
 }
