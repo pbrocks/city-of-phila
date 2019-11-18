@@ -25,25 +25,17 @@ function cphila_contact_info_meta_box( $meta_boxes ) {
 				'attributes' => array(),
 			),
 			array(
-				'type'            => 'fieldset_text',
-				'id'              => $prefix . 'contact_info',
-				'clone'           => true,
-				'group_title'     => 'Contact {#} Info',
-				// 'options'     =>
-				// array(
-				// 'id'      => 'field_id',
-				// 'name'    => 'Fieldset Text',
-				// 'type'    => 'fieldset_text',
-				// Options: array of key => Label for text boxes
-				// Note: key is used as key of array of values stored in the database
-						'options' => array(
-							'name'    => 'Name',
-							'address' => 'Address',
-							'email'   => 'Email',
-						),
+				'type'    => 'fieldset_text',
+				'id'      => $prefix . 'contact_info',
+				'clone'   => true,
+				'options' => array(
 
-				// Is field cloneable?
-				'clone'           => true,
+					'name'  => __( 'Contact Name', 'city-of-phila' ),
+					'url'   => __( 'Contact URL', 'city-of-phila' ),
+					'email' => __( 'Contact Email', 'city-of-phila' ),
+					'phone' => __( 'Contact Phone', 'city-of-phila' ),
+				),
+				'clone'   => true,
 			),
 		),
 	);
@@ -54,36 +46,45 @@ function cphila_contact_info_meta_box( $meta_boxes ) {
 
 
 
-add_filter( 'the_content', 'cphila_post_content_filter' );
-function cphila_post_content_filter( $content ) {
+function cphila_release_date_filter( $content ) {
 	if ( 'post' !== get_post_type( get_the_ID() ) ) {
 		return $content;
 	}
-		$prepended_content = '<div style="color:red">Filtering ' . wp_strip_all_tags( $content ) . ' with ' . __FUNCTION__ . '</div>';
-	$return_content        = $prepended_content . $content;
+	$meta_fields       = get_post_custom();
+	$prepended_content = ( date_i18n( get_option( 'date_format' ), strtotime( $meta_fields['cphila_release_date'][0] ) ) ?: '' );
+	if ( ! empty( $prepended_content ) ) {
+		$return_content = '<p>' . $prepended_content . '</p>' . $content;
+	} else {
+		$return_content = $content;
+	}
 	return $return_content;
 }
-add_filter( 'the_content', 'filter_the_content_in_the_main_loop' );
-function filter_the_content_in_the_main_loop( $content ) {
-	if ( get_post_type( get_the_ID() ) === 'post' ) {
-		$meta_fields = get_post_custom();
-
-		$content .= esc_html__( "I'm filtering a post on ", 'city-of-phila' );
-		$content .= date_i18n( get_option( 'date_format' ), strtotime( $meta_fields['cphila_release_date'][0] ) );
-	} else {
-		$content .= esc_html__( 'NOT filtering a post', 'city-of-phila' );
-	}
-
-	return $content;
-}
 
 
-add_filter( 'the_content', 'cphila_postmeta_content_filter' );
-function cphila_postmeta_content_filter( $content ) {
+add_filter( 'the_content', 'cphila_contact_info_filter' );
+add_filter( 'the_content', 'cphila_release_date_filter' );
+function cphila_contact_info_filter( $content ) {
 	if ( 'post' !== get_post_type( get_the_ID() ) ) {
 		return $content;
 	}
+	$meta_fields       = get_post_custom();
+	$prepended_content = ( date_i18n( get_option( 'date_format' ), strtotime( $meta_fields['cphila_release_date'][0] ) ) ?: '' );
+	if ( ! empty( $prepended_content ) ) {
+		$return_date = '<p>' . $prepended_content . '</p>';
+	} else {
+		$return_date = '';
+	}
+	$field_values = rwmb_meta( 'cphila_contact_info' );
 
+	// foreach ( $field_values as $value ) {
+		// echo $value['name'];
+		// echo $value['url'];
+		// echo $value['email'];
+		// echo $value['phone'];
+	// }
+	$return_values = wp_sprintf( '%s: %l', __( 'Some cool numbers' ), array( 1, 5, 10, 15 ) );
+
+	return '<p>' . $return_date . '</p>' . '<p>' . print_r( $return_values, true ) . '</p>' . $content;
 	$meta_fields = get_post_custom();
 	return $content . '<pre>' . print_r( $meta_fields, true ) . '</pre>';
 }

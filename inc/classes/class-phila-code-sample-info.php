@@ -1,14 +1,10 @@
 <?php
 
-new Phila_Code_Sample_Info();
+// new Phila_Code_Sample_Info();
 class Phila_Code_Sample_Info {
 	public function __construct() {
 		add_action( 'admin_enqueue_scripts', array( $this, 'initialize_template_request_scripts' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'initialize_template_request_scripts' ) );
-		add_action( 'wp_ajax_page_template_request', array( $this, 'run_template_request_function' ) );
-		add_action( 'wp_ajax_nopriv_hide_arrow_request', array( $this, 'run_template_request_function' ) );
-		add_action( 'wp_ajax_hide_arrow_request', array( $this, 'run_hide_arrow_function' ) );
-		add_action( 'wp_ajax_nopriv_page_hide_arrow', array( $this, 'run_hide_arrow_function' ) );
 		add_action( 'init', array( $this, 'phila_admin_init' ) );
 	}
 	/**
@@ -28,50 +24,8 @@ class Phila_Code_Sample_Info {
 	 * @return [type] [description]
 	 */
 	public function initialize_template_request_scripts() {
-		wp_register_script( 'page-template-request', plugins_url( 'js/page-template-request.js', __DIR__ ), array( 'jquery' ), time(), true );
-		wp_localize_script(
-			'page-template-request',
-			'template_request_object',
-			array(
-				'template_request_ajaxurl' => admin_url( 'admin-ajax.php' ),
-				'template_request_nonce'   => wp_create_nonce( 'page-template-request-nonce' ),
-			)
-		);
-		wp_enqueue_script( 'page-template-request' );
-
-		wp_register_script( 'hide-indexing-arrow', plugins_url( 'js/hide-indexing-arrow.js', __DIR__ ), array( 'jquery' ), time(), true );
-		wp_localize_script(
-			'hide-indexing-arrow',
-			'hide_indexing_arrow',
-			array(
-				'hide_arrow_ajaxurl' => admin_url( 'admin-ajax.php' ),
-				'hide_arrow_nonce'   => wp_create_nonce( 'hide-indexing-arrow-nonce' ),
-			)
-		);
-		wp_enqueue_script( 'hide-indexing-arrow' );
 		wp_register_style( 'phila-code-sample', plugins_url( 'css/phila-code-sample.css', __DIR__ ), time() );
 		wp_enqueue_style( 'phila-code-sample' );
-	}
-
-	public function run_template_request_function() {
-		global $template;
-		$return_data                  = $_POST;
-		$return_data['page_template'] = ( get_post_meta( $_POST['returned_id'], '_wp_page_template', true ) ?: 'the default template' );
-		// echo '<pre>$return_data ';
-		// print_r( $return_data );
-		echo json_encode( $return_data );
-		// echo '</pre>';
-		exit();
-	}
-
-	public function run_hide_arrow_function() {
-		$return_data                = $_POST;
-		$return_data['hide_arrow2'] = $_POST['hide_arrow'];
-		update_user_meta( get_current_user_id(), 'hide_bouncing_arrow', $_POST['hide_arrow'] );
-		echo '<pre>$return_data ';
-		print_r( $return_data );
-		echo '</pre>';
-		exit();
 	}
 
 	public function phila_admin_init() {
@@ -278,8 +232,6 @@ Your setup will render differently based on the values of your post meta. The fo
 								<h2 class="description">Phila Code Challenge</h2>
 							</grid-cell>					
 							<grid-cell class="content">
-								<p>
-									We'd like you to come up with solutions to a couple of user stories that are similar to the work we do every day. Given each of the scenarios below, develop a solution that is simple, scalable, and easily maintainable. Leverage core WordPress features when appropriate. And pull in libraries if needed (and only if needed).</p>
 								<ol>
 									<li>Marketing team members are having a hard time figuring out what page templates are being used on what pages. Write a plugin that lets authors easily see which template a page is using and also see only pages using a particular template.</li>
 
@@ -289,7 +241,6 @@ Your setup will render differently based on the values of your post meta. The fo
 						<?php
 						break;
 				}
-							// echo '</table>';
 			}
 			?>
 		</div>
@@ -297,21 +248,4 @@ Your setup will render differently based on the values of your post meta. The fo
 		<?php
 	}
 
-	/**
-	 * Display the plugin code_sample bouncing arrow
-	 */
-	public function phila_code_sample_arrow() {
-		global $code_sample_help_page;
-		?>
-	<div id="bouncing-arrow">
-		<div id="close-arrow-x">x</div>
-		<div class="arrow-container">
-			<div class="arrow-footer">
-				<svg class="arrow-circle-down bounce" viewbox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
-				<path d="M1412 897q0-27-18-45l-91-91q-18-18-45-18t-45 18l-189 189v-502q0-26-19-45t-45-19h-128q-26 0-45 19t-19 45v502l-189-189q-19-19-45-19t-45 19l-91 91q-18 18-18 45t18 45l362 362 91 91q18 18 45 18t45-18l91-91 362-362q18-18 18-45zm252-1q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z" fill="#fff"></path></svg>
-			</div>
-		</div>
-	</div>
-		<?php
-	}
 }

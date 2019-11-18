@@ -37,8 +37,6 @@ class Help_Welcome_Menus {
 		$slug                  = preg_replace( '/_+/', '-', __FUNCTION__ );
 		$label                 = ucwords( preg_replace( '/_+/', ' ', __FUNCTION__ ) );
 		$code_sample_help_page = add_dashboard_page( __( $label, 'phila-code-sample' ), __( $label, 'phila-code-sample' ), 'manage_options', $slug . '.php', array( $this, 'phila_code_sample_response' ) );
-
-		add_action( 'load-' . $code_sample_help_page, array( $this, 'admin_add_help_tab' ) );
 	}
 
 	/**
@@ -135,45 +133,6 @@ class Help_Welcome_Menus {
 			)
 		);
 		exit;
-	}
-
-	public function admin_add_help_tab() {
-		global $code_sample_help_page;
-		$screen = get_current_screen();
-
-		// Add my_help_tab if current screen is My Admin Page
-		$screen->add_help_tab(
-			array(
-				'id'      => 'code_sample_help_tab_1',
-				'title'   => __( 'Code Sample Help Tab One', 'phila-code-sample' ),
-				'content' => '<h3>' . __( 'Code Sample Help Tab', 'phila-code-sample' ) . '</h3>' .
-				'<p>' . __( 'Use this field to describe to the user what text you want on the help tab.', 'phila-code-sample' ) . '</p>',
-			)
-		);
-		$screen->add_help_tab(
-			array(
-				'id'      => 'code_sample_help_tab_2',
-				'title'   => __( 'Code Sample Help Tab Two', 'phila-code-sample' ),
-				'content' => '<h3>' . __( 'Code Sample Help Tab', 'phila-code-sample' ) . '</h3>' .
-				'<p>' . __( 'Use this field to describe to the user what text you want on the help tab.', 'phila-code-sample' ) . '</p>',
-			)
-		);
-		$screen->add_help_tab(
-			array(
-				'id'      => 'code_sample_help_tab_3',
-				'title'   => __( 'Request One', 'phila-code-sample' ),
-				'content' => '<h3>' . __( 'Scenario 1', 'phila-code-sample' ) . '</h3>' .
-				'<p>' . __( 'Marketing team members are having a hard time figuring out what page templates are being used on what pages. Write a plugin that lets authors easily see which template a page is using and also see only pages using a particular template.', 'phila-code-sample' ) . '</p>',
-			)
-		);
-		$screen->add_help_tab(
-			array(
-				'id'      => 'code_sample_help_tab_4',
-				'title'   => __( 'Request Two', 'phila-code-sample' ),
-				'content' => '<h3>' . __( 'Code Sample Help Tab', 'phila-code-sample' ) . '</h3>' .
-				'<p>' . __( 'The stakeholders want to be able to get featured posts out of many of our blogs and online magazines so they can put the posts into a widget on the philangine.com blog. Write a plugin for those WordPress sites that gives the post author a way to mark a post as "Featured on WP Engine\'s blog" and a way to get the 5 most recent featured posts out of the REST API.', 'phila-code-sample' ) . '</p>',
-			)
-		);
 	}
 
 }
