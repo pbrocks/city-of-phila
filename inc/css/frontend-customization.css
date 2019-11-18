@@ -1,11 +1,15 @@
-body {
-    background: aliceblue;
+#phila-wrapper {
+	padding: 1rem;
+	border: .2rem solid #54bc4d;
+	font-size: 1rem;
 }
-
-pre {
-	white-space: pre-wrap;       /* css-3 */
-	white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
-	white-space: -pre-wrap;      /* Opera 4-6 */
-	white-space: -o-pre-wrap;    /* Opera 7 */
-	word-wrap: break-word;       /* Internet Explorer 5.5+ */
+#phila-output {
+	padding: 0 1rem;
+	display: grid;
+	grid-gap: 1rem;
+	grid-template-columns: 1fr 1fr;
+}
+.phila-contact {
+	padding: .1rem 1rem;
+	background: lightgray;
 }

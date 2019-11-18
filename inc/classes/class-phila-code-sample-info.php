@@ -1,31 +1,36 @@
 <?php
 
-// new Phila_Code_Sample_Info();
+new Phila_Code_Sample_Info();
 class Phila_Code_Sample_Info {
 	public function __construct() {
-		add_action( 'admin_enqueue_scripts', array( $this, 'initialize_template_request_scripts' ) );
-		add_action( 'wp_enqueue_scripts', array( $this, 'initialize_template_request_scripts' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'initialize_cphila_admin_styles' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, 'initialize_cphila_frontend_styles' ) );
 		add_action( 'init', array( $this, 'phila_admin_init' ) );
-	}
-	/**
-	 * [phila_code_sample_footer]
-	 *
-	 * @return [type] [description]
-	 */
-	public function phila_code_sample_footer() {
-		echo '<div id="' . preg_replace( '/_+/', '-', __FUNCTION__ ) . '">';
-		echo '<h3>' . __FILE__ . __LINE__ . '</h3>';
-		echo '</div>';
 	}
 
 	/**
-	 * [initialize_template_request_scripts]
+	 * [initialize_cphila_frontend_styles]
 	 *
 	 * @return [type] [description]
 	 */
-	public function initialize_template_request_scripts() {
-		wp_register_style( 'phila-code-sample', plugins_url( 'css/phila-code-sample.css', __DIR__ ), time() );
+	public function initialize_cphila_frontend_styles() {
+		wp_register_style( 'phila-code-2019', plugins_url( 'css/phila-code-2019.css', __DIR__ ), [ 'twentynineteen' ], time() );
+
+		$current_theme = wp_get_theme();
+		if ( 'Twenty Nineteen' === $current_theme->get( 'Name' ) ) {
+			wp_enqueue_style( 'phila-code-2019' );
+		}
+	}
+
+	/**
+	 * [initialize_cphila_admin_styles]
+	 *
+	 * @return [type] [description]
+	 */
+	public function initialize_cphila_admin_styles() {
+		wp_register_style( 'phila-code-sample', plugins_url( 'css/phila-code-sample.css', __DIR__ ), [], time() );
 		wp_enqueue_style( 'phila-code-sample' );
+
 	}
 
 	public function phila_admin_init() {

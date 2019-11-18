@@ -43,48 +43,59 @@ function cphila_contact_info_meta_box( $meta_boxes ) {
 	return $meta_boxes;
 }
 
-
-
-
-function cphila_release_date_filter( $content ) {
-	if ( 'post' !== get_post_type( get_the_ID() ) ) {
-		return $content;
-	}
-	$meta_fields       = get_post_custom();
-	$prepended_content = ( date_i18n( get_option( 'date_format' ), strtotime( $meta_fields['cphila_release_date'][0] ) ) ?: '' );
-	if ( ! empty( $prepended_content ) ) {
-		$return_content = '<p>' . $prepended_content . '</p>' . $content;
-	} else {
-		$return_content = $content;
-	}
-	return $return_content;
+add_filter( 'body_class', 'add_phila_body_class' );
+function add_phila_body_class( $classes ) {
+	$classes[] = 'phila-code';
+	return $classes;
 }
 
-
 add_filter( 'the_content', 'cphila_contact_info_filter' );
-add_filter( 'the_content', 'cphila_release_date_filter' );
 function cphila_contact_info_filter( $content ) {
+	wp_enqueue_style( 'phila-code-2019' );
+
 	if ( 'post' !== get_post_type( get_the_ID() ) ) {
 		return $content;
 	}
-	$meta_fields       = get_post_custom();
-	$prepended_content = ( date_i18n( get_option( 'date_format' ), strtotime( $meta_fields['cphila_release_date'][0] ) ) ?: '' );
+
+	$release_date      = rwmb_meta( 'cphila_release_date' );
+	$prepended_content = ( $release_date ? date_i18n( get_option( 'date_format' ), strtotime( $release_date ) ) : '' );
 	if ( ! empty( $prepended_content ) ) {
-		$return_date = '<p>' . $prepended_content . '</p>';
+		$return_date = '<p><b>Release date: </b>' . $prepended_content . '</p>';
 	} else {
 		$return_date = '';
 	}
 	$field_values = rwmb_meta( 'cphila_contact_info' );
 
-	// foreach ( $field_values as $value ) {
-		// echo $value['name'];
-		// echo $value['url'];
-		// echo $value['email'];
-		// echo $value['phone'];
-	// }
-	$return_values = wp_sprintf( '%s: %l', __( 'Some cool numbers' ), array( 1, 5, 10, 15 ) );
+	if ( ! empty( $field_values ) ) {
+		ob_start();
 
-	return '<p>' . $return_date . '</p>' . '<p>' . print_r( $return_values, true ) . '</p>' . $content;
-	$meta_fields = get_post_custom();
-	return $content . '<pre>' . print_r( $meta_fields, true ) . '</pre>';
+		$current_theme = wp_get_theme();
+		if ( 'Twenty Nineteen' === $current_theme->get( 'Name' ) ) {
+			echo '<style>
+			#phila-wrapper {
+				font-size: .8rem;
+			}
+			.entry .entry-content > * {
+			max-width: calc(12 * (100vw / 12) - 28px);
+			}
+			</style>';
+		}
+		foreach ( $field_values as $value ) {
+			printf(
+				'<div class="%1$s">
+			<p><a href="%4$s">%2$s</a></p>
+			<p>%3$s</p></div>',
+				'phila-contact',
+				( $value['name'] ? '<b>' . __( 'Contact Name: ', 'city-of-phila' ) . '</b>' . esc_attr( $value['name'] ) : '' ),
+				( $value['email'] ? '<b>' . __( 'Contact email: ', 'city-of-phila' ) . '</b>' . esc_html( $value['email'] ) : '' ),
+				( $value['email'] ? esc_url( $value['url'] ) : '#' )
+			);
+		}
+
+		$return_values = ob_get_clean();
+
+		return '<div id="phila-wrapper"><p class="release-date">' . $return_date . '</p><div id="phila-output">' . $return_values . '</div></div>' . $content;
+	} else {
+		return $content;
+	}
 }
