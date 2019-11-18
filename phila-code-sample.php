@@ -21,6 +21,9 @@ function phila_code_sample_install() {
 
 add_action( 'plugins_loaded', 'phila_code_sample_initialize_php' );
 function phila_code_sample_initialize_php() {
+	if ( ! class_exists( 'RWMB_Loader' ) ) {
+		return missing_plugin_notice__error();
+	}
 	foreach ( glob( __DIR__ . '/inc/classes/*.php' ) as $filename ) {
 		require $filename;
 	}
@@ -35,3 +38,10 @@ function phila_code_sample_load_textdomain() {
 	load_plugin_textdomain( 'phila-code-sample', false, basename( dirname( __FILE__ ) ) . '/languages' );
 }
 add_action( 'plugins_loaded', 'phila_code_sample_load_textdomain' );
+
+function missing_plugin_notice__error() {
+	$class = 'notice notice-error';
+	$message = __( 'For this plugin to work, you will need to install the MetaBoxes plugin as well.', 'phila-code-sample' );
+
+	printf( '<div class="%1$s"><p>%2$s</p></div>', esc_attr( $class ), esc_html( $message ) );
+}
