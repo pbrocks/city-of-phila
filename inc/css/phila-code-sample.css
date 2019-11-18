@@ -47,27 +47,20 @@ h1, p {
 	margin: 0 0 1em 0;
 }
 
-/* no grid support? * /
-.sidebar {
-	float: left;
-	/*width: 19.1489%;* /
-}
-
-.content {
-	float: right;
-	/*width: 79.7872%;* /
-}*/
 .tabs-wrap {
 	padding:  1rem 2rem;
 }
 /* make a grid */
-/*.grid-wrapper {*/
-#poststuff {
-	/*max-width: 940px;*/
+.dashboard_page_phila-code-sample-dashboard #poststuff {
 	margin: 0 auto;
 	display: grid;
 	grid-template-columns: 1fr 4fr;
 	grid-gap: .5rem;
+}
+.dashboard_page_phila-code-sample-dashboard h2 > a.nav-tab.nav-tab-active {
+	color: #00a0d2;
+	background: #fff;
+	border-radius: 1rem;
 }
 .wp-core-ui.dashboard_page_phila-code-sample-dashboard p {
 	font-size: 1rem;

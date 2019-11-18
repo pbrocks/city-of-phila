@@ -4,7 +4,7 @@
 
 Often, we need to accommodate requests from users for a new field, or new section in the WordPress admin interface, with a corresponding rendering on the front-end. 
 
-Your task is to create a set of fields in the WordPress admin that allows a user to add the following to the e _**posts**_ post type in WordPress:
+Your task is to create a set of fields in the WordPress admin that allows a user to add the following to the _**posts**_ post type in WordPress:
 
   - A date field to select the “release date” of the post
   - A set of repeatable text fields for: 

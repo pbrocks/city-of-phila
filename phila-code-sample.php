@@ -2,9 +2,9 @@
 /**
  * Plugin Name: City of Phila Code Sample
  * Plugin URL: https://github.com/pbrocks/city-of-phila
- * Description: Functionality plugin writting in response to WP Engine Code Sample.
+ * Description: Functionality plugin written for City of Philadelphia according to specs found in https://docs.google.com/presentation/d/1mxJrJizW8aVye65NAzqNJs1KSIie0mE06H9VmCG1k_I/edit#slide=id.g5b4da5837f_0_6.
  * Author: pbrocks (Paul Barthmaier)
- * Version: 0.1.1
+ * Version: 0.1.2
  * Author URI: https://github.com/pbrocks
  * Text Domain: phila-code-sample
  */
@@ -29,3 +29,26 @@ function phila_code_sample_initialize_php() {
 		require $filename;
 	}
 }
+
+/**
+ * Setup WordPress localization support
+ *
+ * @since 1.0
+ */
+function phila_code_sample_load_textdomain() {
+	load_plugin_textdomain( 'phila-code-sample', false, basename( dirname( __FILE__ ) ) . '/languages' );
+}
+add_action( 'plugins_loaded', 'phila_code_sample_load_textdomain' );
+
+/**
+ * [phila_code_sample_plugin_action_links description]
+ *
+ * @param  [type] $links [description]
+ * @return [type]        [description]
+ */
+function phila_code_sample_plugin_action_links( $links ) {
+	$action_links[] =
+	'<a href="' . admin_url( 'customize.php?autofocus[panel]=sidetrack_login_panel' ) . '">' . __( 'Settings', 'phila-code-sample' ) . '</a>';
+	return array_merge( $links, $action_links );
+}
+add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'phila_code_sample_plugin_action_links' );

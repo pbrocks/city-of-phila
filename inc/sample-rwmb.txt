@@ -1,0 +1,200 @@
+<?php
+add_filter(
+	'rwmb_meta_boxes',
+	function ( $meta_boxes ) {
+		$meta_boxes[] = array(
+			'title'      => 'Section Hero',
+			'post_types' => 'post',
+			'fields'     => array(
+				array(
+					'id'   => 'hero_title',
+					'name' => 'Title',
+					'type' => 'text',
+				),
+				array(
+					'id'      => 'hero_desc',
+					'name'    => 'Description',
+					'type'    => 'wysiwyg',
+					'options' => array(
+						'teeny'         => true,
+						'media_buttons' => false,
+						'quicktags'     => false,
+					),
+				),
+				array(
+					'id'   => 'hero_button_link',
+					'name' => 'Button Link',
+					'type' => 'text',
+				),
+				array(
+					'id'   => 'hero_button_text',
+					'name' => 'Button Text',
+					'type' => 'text',
+				),
+			),
+		);
+
+	$meta_boxes[] = array(
+		'title'      => 'Section Intro',
+		'post_types' => 'post',
+		'fields'     => array(
+			array(
+				'id'   => 'intro_title',
+				'name' => 'Title',
+				'type' => 'text',
+			),
+			array(
+				'id'      => 'intro_desc',
+				'name'    => 'Description',
+				'type'    => 'wysiwyg',
+				'options' => array(
+					'teeny'         => true,
+					'media_buttons' => false,
+					'quicktags'     => false,
+				),
+			),
+			array(
+				'id'    => 'intro_icons',
+				'name'  => 'Icon',
+				'desc'  => 'Enter Font-Awesome Icon Class',
+				'type'  => 'text',
+				'clone' => true,
+			),
+		),
+	);
+
+	$meta_boxes[] = array(
+		'title'      => 'Section Services',
+		'post_types' => 'post',
+		'fields'     => array(
+			array(
+				'type'        => 'group',
+				'id'          => 'services',
+				'collapsible' => true,
+				'group_title' => 'Section {#}',
+				'clone'       => true,
+				'fields'      => array(
+					array(
+						'id'               => 'image',
+						'name'             => 'Image',
+						'type'             => 'image_advanced',
+						'max_file_uploads' => 1,
+						'max_status'       => false,
+					),
+					array(
+						'id'   => 'title',
+						'name' => 'Title',
+						'type' => 'text',
+					),
+					array(
+						'id'      => 'desc',
+						'name'    => 'Description',
+						'type'    => 'wysiwyg',
+						'options' => array(
+							'teeny'         => true,
+							'media_buttons' => false,
+							'quicktags'     => false,
+						),
+					),
+				),
+			),
+		),
+	);
+
+	$meta_boxes[] = array(
+		'title'      => 'Section Features',
+		'post_types' => 'post',
+		'fields'     => array(
+			array(
+				'id'   => 'features_title',
+				'name' => 'Title',
+				'type' => 'text',
+			),
+			array(
+				'id'      => 'features_desc',
+				'name'    => 'Description',
+				'type'    => 'wysiwyg',
+				'options' => array(
+					'teeny'         => true,
+					'media_buttons' => false,
+					'quicktags'     => false,
+				),
+			),
+			array(
+				'type'        => 'group',
+				'id'          => 'features',
+				'clone'       => true,
+				'collapsible' => true,
+				'group_title' => 'Feature {#}',
+				'fields'      => array(
+					array(
+						'id'   => 'icon',
+						'name' => 'Icon',
+						'type' => 'text',
+						'desc' => 'Enter Font-Awesome Icon Class',
+					),
+					array(
+						'id'   => 'title',
+						'name' => 'Title',
+						'type' => 'text',
+					),
+					array(
+						'id'      => 'feature_desc',
+						'name'    => 'Description',
+						'type'    => 'wysiwyg',
+						'options' => array(
+							'teeny'         => true,
+							'media_buttons' => false,
+							'quicktags'     => false,
+						),
+					),
+				),
+			),
+		),
+	);
+
+	$meta_boxes[] = array(
+		'title'      => 'Section Call To Action',
+		'post_types' => 'post',
+		'fields'     => array(
+			array(
+				'id'   => 'cta_title',
+				'name' => 'Title',
+				'type' => 'text',
+			),
+			array(
+				'id'      => 'cta_desc',
+				'name'    => 'Description',
+				'type'    => 'wysiwyg',
+				'options' => array(
+					'teeny'         => true,
+					'media_buttons' => false,
+					'quicktags'     => false,
+				),
+			),
+			array(
+				'id'   => 'cta_button_1_link',
+				'name' => 'Button 1 Link',
+				'type' => 'text',
+			),
+			array(
+				'id'   => 'cta_button_1_text',
+				'name' => 'Button 1 Text',
+				'type' => 'text',
+			),
+			array(
+				'id'   => 'cta_button_2_link',
+				'name' => 'Button 2 Link',
+				'type' => 'text',
+			),
+			array(
+				'id'   => 'cta_button_2_text',
+				'name' => 'Button 2 Text',
+				'type' => 'text',
+			),
+		),
+	);
+
+	return $meta_boxes;
+	}
+);
